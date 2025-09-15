@@ -1,13 +1,12 @@
 import Navbar from "./Navbar";
+import Footer from "./Footer";
 
 export default function Layout({ children }) {
   return (
-    <>
+    <div className="flex flex-col min-h-screen">
       <Navbar />
-      <main style={{ padding: "20px" }}>{children}</main>
-      <footer style={{ marginTop: "40px", padding: "20px", background: "#eee" }}>
-        © 2025 MachSchritt - Pflegekräfte in Deutschland
-      </footer>
-    </>
+      <main className="flex-grow">{children}</main>
+      <Footer />
+    </div>
   );
 }
