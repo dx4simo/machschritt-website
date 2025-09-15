@@ -4,16 +4,16 @@ import Image from "next/image";
 export default function Navbar() {
   return (
     <nav className="bg-white shadow-md">
-      <div className="max-w-7xl mx-auto px-4 flex justify-between items-center h-16">
+      <div className="container mx-auto flex justify-between items-center p-4">
         <Link href="/">
-          <Image src="/logo.svg" alt="Logo" width={120} height={40} />
+          <Image src="/logo.svg" alt="MachSchritt Logo" width={50} height={50} />
         </Link>
         <div className="space-x-6">
-          <Link href="/ueber-uns" className="hover:text-blue-600">Über uns</Link>
-          <Link href="/einrichtungen" className="hover:text-blue-600">Für Einrichtungen</Link>
-          <Link href="/pflegekraefte" className="hover:text-blue-600">Für Pflegekräfte</Link>
-          <Link href="/fachbereiche" className="hover:text-blue-600">Fachbereiche</Link>
-          <Link href="/kontakt" className="hover:text-blue-600">Kontakt</Link>
+          <Link href="/ueber-uns">Über uns</Link>
+          <Link href="/einrichtungen">Für Einrichtungen</Link>
+          <Link href="/pflegekraefte">Für Pflegekräfte</Link>
+          <Link href="/fachbereiche">Fachbereiche</Link>
+          <Link href="/kontakt">Kontakt</Link>
         </div>
       </div>
     </nav>
