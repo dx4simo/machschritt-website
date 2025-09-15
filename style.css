@@ -158,5 +158,67 @@ p.lead{margin:0 0 16px; color:var(--muted); font-size:18px}
 .status{ margin-inline-start:12px; font-size:.95rem; opacity:.85; }
 
 
+/* ===== Forms ===== */
+.form{ display:grid; gap:14px; }
+.form-row{ display:grid; gap:12px; }
+.form-row.two{ grid-template-columns: 1fr 1fr; gap:12px; }
+.field{ display:grid; gap:6px; }
+
+.form label{
+  font-weight:700; font-size:.95rem; color:var(--muted);
+}
+
+.form input,
+.form textarea,
+.form select{
+  width:100%;
+  padding:12px 14px;
+  border-radius:12px;
+  border:1px solid var(--line);
+  background: rgba(255,255,255,.03);
+  color: var(--text);
+  outline: none;
+  transition: border-color .15s ease, box-shadow .15s ease, background .15s ease;
+}
+
+.form input::placeholder,
+.form textarea::placeholder{ color: rgba(226,232,240,.55); }
+
+.form input:hover,
+.form textarea:hover,
+.form select:hover{
+  background: rgba(255,255,255,.045);
+}
+
+.form input:focus,
+.form textarea:focus,
+.form select:focus{
+  border-color: var(--brand);
+  box-shadow: 0 0 0 3px rgba(15,168,205,.25);
+  background: rgba(255,255,255,.05);
+}
+
+.form textarea{ resize: vertical; min-height: 140px; }
+
+/* صف أزرار ورسالة الحالة */
+.form-actions{ display:flex; align-items:center; gap:12px; }
+.status{ font-size:.95rem; color: var(--muted); }
+
+/* حالات نجاح/خطأ اختيارية (استعملها من JS بإضافة الكلاس) */
+.status.ok{ color:#16a34a; }         /* أخضر */
+.status.err{ color:var(--accent); }  /* وردي */
+
+/* لو بطاقة عليها data-noimg امنع أي صورة تلقائية */
+.card[data-noimg] .card-img,
+.card[data-noimg] .img{ display:none !important; }
+
+/* لمساحات أفضل داخل بطاقة الاتصال الكبيرة */
+.contact-grid .card h3{ margin-top:2px; margin-bottom:10px; }
+.contact-grid .card{ padding:18px; }
+@media (max-width: 640px){
+  .form-row.two{ grid-template-columns:1fr; }
+}
+
+
 
 
