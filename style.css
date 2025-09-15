@@ -220,5 +220,21 @@ p.lead{margin:0 0 16px; color:var(--muted); font-size:18px}
 }
 
 
+/* روابط المنيو بس */
+.nav nav a{
+  color:var(--text); text-decoration:none; margin-inline:10px; font-weight:600;
+  padding:8px 10px; border-radius:10px;
+}
+.nav nav a:hover{ background:rgba(255,255,255,.06) }
+.nav nav a.active{ color:#000; background:var(--brand) }
+
+/* اللوجو كلينك */
+.brand{
+  display:flex; align-items:center; gap:8px;
+  text-decoration:none; color:inherit; /* ما يورّثش ستايل الروابط */
+  cursor:pointer;
+}
+.brand-mark{ height:28px }
+.brand-logo{ height:28px }
 
 
