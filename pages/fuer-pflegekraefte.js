@@ -1,13 +1,16 @@
-import Layout from '../components/Layout';
+import Navbar from "../components/Navbar";
 
-export default function FuerPflegekraefte() {
+export default function Pflegekraefte() {
   return (
-    <Layout title="Für Pflegekräfte">
-      <div className="p-10">
+    <div>
+      <Navbar />
+      <section className="p-10 text-center">
         <h1 className="text-3xl font-bold mb-4">Für Pflegekräfte</h1>
-        <p>Wir begleiten Pflegekräfte auf ihrem Weg nach Deutschland und helfen bei allen Schritten.</p>
-        <img src="/images/nurse3.jpg" alt="Pflegekräfte" className="mt-6 rounded-lg shadow-lg w-1/2"/>
-      </div>
-    </Layout>
-  )
+        <p className="text-gray-700 max-w-2xl mx-auto">
+          Wir begleiten Pflegekräfte auf ihrem Weg nach Deutschland – von der
+          Bewerbung bis zur erfolgreichen Integration im Arbeitsumfeld.
+        </p>
+      </section>
+    </div>
+  );
 }
