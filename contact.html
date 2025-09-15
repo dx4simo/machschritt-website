@@ -1,0 +1,49 @@
+<!DOCTYPE html><html lang="de" dir="ltr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kontakt | MachSchritt</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css"><link rel="icon" href="logo-mark.svg">
+</head><body>
+<header class="nav"><div class="container nav-inner">
+  <div class="brand"><img class="brand-mark" src="logo-mark.svg" alt=""><img class="brand-logo" src="logo-wordmark.svg" alt="MachSchritt"></div>
+  <nav>
+    <a href="index.html">Startseite</a>
+    <a href="about.html">Über uns</a>
+    <a href="clients.html">Für Kunden</a>
+    <a href="talents.html">Für Fachkräfte</a>
+    <a href="contact.html">Kontakt</a>
+  </nav><button class="menu-btn">Menü ☰</button>
+</div></header>
+
+<section class="section">
+  <div class="container">
+    <h1>Kontakt</h1>
+    <p class="lead">Schreiben Sie uns auf WhatsApp oder senden Sie eine Nachricht – wir antworten innerhalb von 24 Stunden.</p>
+    <div class="grid cols-3">
+      <div class="card">
+        <h3>WhatsApp</h3>
+        <p class="muted">Direkter Kontakt</p>
+        <a class="btn btn-primary" href="https://wa.me/201040707531" target="_blank" rel="noopener">Chat starten</a>
+      </div>
+      <div class="card" style="grid-column: span 2;">
+        <h3>Ihre Nachricht</h3>
+        <form onsubmit="event.preventDefault(); alert('Danke! Wir haben Ihre Nachricht erhalten.');">
+          <div style="display:grid; gap:10px; grid-template-columns:1fr 1fr">
+            <input required placeholder="Vollständiger Name" style="padding:12px; border-radius:10px; background:#0B1220; border:1px solid var(--line); color:var(--text)">
+            <input required placeholder="Mobilnummer" style="padding:12px; border-radius:10px; background:#0B1220; border:1px solid var(--line); color:var(--text)">
+            <input placeholder="Betreff" style="padding:12px; border-radius:10px; background:#0B1220; border:1px solid var(--line); color:var(--text)">
+            <textarea rows="4" placeholder="Ihre Nachricht" style="grid-column:1/-1; padding:12px; border-radius:10px; background:#0B1220; border:1px solid var(--line); color:var(--text)"></textarea>
+          </div>
+          <div style="margin-top:10px"><button class="btn btn-primary" type="submit">Senden</button></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer"><div class="container footer-inner">
+  <p>© <span id="year"></span> MachSchritt</p>
+  <div><a class="nav" href="privacy.html">Datenschutz</a><a class="nav" href="imprint.html" style="margin-inline-start:10px">Impressum</a></div>
+</div></footer>
+<script src="app.js"></script>
+</body></html>
