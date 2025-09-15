@@ -73,15 +73,18 @@ document.addEventListener('DOMContentLoaded', () => {
   const y = document.getElementById('year');
   if (y) y.textContent = new Date().getFullYear();
 
-  /* ===== موبايل منيو ===== */
-  const btn = document.querySelector('.menu-btn');
-  const nav = document.querySelector('header nav');
-  if (btn && nav) {
-    btn.addEventListener('click', () => nav.classList.toggle('open'));
-    document.addEventListener('click', (e) => {
-      if (!nav.contains(e.target) && !btn.contains(e.target)) nav.classList.remove('open');
-    });
-  }
+ /* ===== موبايل منيو ===== */
+const menuBtn = document.querySelector('.menu-btn');
+const navEl   = document.querySelector('header nav');
+if (menuBtn && navEl) {
+  menuBtn.addEventListener('click', () => navEl.classList.toggle('open'));
+  document.addEventListener('click', (e) => {
+    if (!navEl.contains(e.target) && !menuBtn.contains(e.target)) {
+      navEl.classList.remove('open');
+    }
+  });
+}
+
 
   /* ===== تمييز الرابط الحالي ===== */
   const path = location.pathname.split('/').pop() || 'index.html';
