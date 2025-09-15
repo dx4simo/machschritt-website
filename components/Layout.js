@@ -1,16 +1,13 @@
-import Head from 'next/head';
-import Navbar from './Navbar';
-import Footer from './Footer';
+import Navbar from "./Navbar";
 
-export default function Layout({ children, title }) {
+export default function Layout({ children }) {
   return (
-    <div>
-      <Head>
-        <title>{title}</title>
-      </Head>
+    <>
       <Navbar />
-      <main className="min-h-screen">{children}</main>
-      <Footer />
-    </div>
-  )
+      <main style={{ padding: "20px" }}>{children}</main>
+      <footer style={{ marginTop: "40px", padding: "20px", background: "#eee" }}>
+        © 2025 MachSchritt - Pflegekräfte in Deutschland
+      </footer>
+    </>
+  );
 }
