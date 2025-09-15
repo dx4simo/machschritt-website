@@ -1,12 +1,16 @@
-import Layout from '../components/Layout';
+import Navbar from "../components/Navbar";
 
-export default function FuerEinrichtungen() {
+export default function Einrichtungen() {
   return (
-    <Layout title="Für Einrichtungen">
-      <div className="p-10">
+    <div>
+      <Navbar />
+      <section className="p-10 text-center">
         <h1 className="text-3xl font-bold mb-4">Für Einrichtungen</h1>
-        <p>Wir unterstützen Kliniken und Pflegeheime mit erfahrenen Fachkräften aus dem Ausland.</p>
-      </div>
-    </Layout>
-  )
+        <p className="text-gray-700 max-w-2xl mx-auto">
+          Wir unterstützen Kliniken und Pflegeheime mit erfahrenen Pflegekräften
+          und bieten nachhaltige Lösungen für den Fachkräftemangel.
+        </p>
+      </section>
+    </div>
+  );
 }
