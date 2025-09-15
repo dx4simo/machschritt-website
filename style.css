@@ -119,4 +119,36 @@ p.lead{margin:0 0 16px; color:var(--muted); font-size:18px}
 }
 .hero-figure img.fade{ opacity: 0; }
 
+/* ==== Hero slider UI ==== */
+.hero-slider{ position: relative; }
+.hero-figure{ position: relative; }
+.hero-figure img{ transition: opacity .6s ease; opacity: 1; }
+.hero-figure img.fade{ opacity: 0; }
+
+/* arrows */
+.hero-nav{
+  position:absolute; top:50%; transform:translateY(-50%);
+  width:42px; height:42px; border-radius:50%;
+  border:1px solid var(--line); background:rgba(11,18,32,.6);
+  color:var(--text); font-size:22px; line-height:1; cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  backdrop-filter: blur(6px);
+}
+.hero-nav:hover{ background:rgba(255,255,255,.08); border-color:rgba(255,255,255,.2); }
+.hero-nav.prev{ left:10px; }
+.hero-nav.next{ right:10px; }
+
+/* dots */
+.hero-dots{
+  position:absolute; left:0; right:0; bottom:10px;
+  display:flex; gap:8px; justify-content:center; align-items:center;
+}
+.hero-dot{
+  width:9px; height:9px; border-radius:50%;
+  background:rgba(255,255,255,.35); border:1px solid var(--line);
+  cursor:pointer;
+}
+.hero-dot.active{ background:var(--brand); border-color:var(--brand); }
+
+
 
