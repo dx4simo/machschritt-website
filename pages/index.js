@@ -1,13 +1,15 @@
-import Layout from '../components/Layout';
+import Layout from "../components/Layout";
+import Image from "next/image";
 
 export default function Home() {
   return (
-    <Layout title="MachSchritt - Startseite">
-      <div className="text-center py-20">
-        <h1 className="text-4xl font-bold">Willkommen bei MachSchritt</h1>
-        <p className="mt-4 text-lg">Ihre zuverlässige Pflegevermittlung für Deutschland.</p>
-        <img src="/images/nurse1.jpg" alt="Pflegekräfte" className="mx-auto mt-6 rounded-lg shadow-lg w-1/2"/>
-      </div>
+    <Layout>
+      <h1>Willkommen bei MachSchritt</h1>
+      <p>
+        Wir bringen qualifizierte Pflegekräfte aus dem Ausland nach Deutschland,
+        um das Gesundheitssystem zu unterstützen.
+      </p>
+      <Image src="/nurses1.jpg" alt="Pflegekräfte" width={600} height={400} />
     </Layout>
-  )
+  );
 }
