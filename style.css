@@ -150,5 +150,13 @@ p.lead{margin:0 0 16px; color:var(--muted); font-size:18px}
 }
 .hero-dot.active{ background:var(--brand); border-color:var(--brand); }
 
+.contact-grid{ display:grid; grid-template-columns: 320px 1fr; gap:24px; }
+.contact-grid .card .form-row.two{ display:grid; grid-template-columns: 1fr 1fr; gap:12px; }
+@media (max-width: 900px){
+  .contact-grid{ grid-template-columns: 1fr; }
+}
+.status{ margin-inline-start:12px; font-size:.95rem; opacity:.85; }
+
+
 
 
