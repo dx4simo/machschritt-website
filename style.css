@@ -82,3 +82,33 @@ p.lead{margin:0 0 16px; color:var(--muted); font-size:18px}
   .grid.cols-3{grid-template-columns:1fr}
   h1{font-size:28px}
 }
+
+/* ==== Images on cards ==== */
+.card-img{
+  width:100%;
+  aspect-ratio:16 / 9;   /* يمنع القفز أثناء التحميل */
+  object-fit:cover;
+  border-radius:12px;
+  display:block;
+  background:#0a1020;     /* لون خلفي لو الصورة بتتأخر */
+  border:1px solid var(--line);
+  margin-bottom:12px;
+}
+
+/* اختيارية: ظلّ خفيف عند الهوفر */
+.card:hover .card-img{
+  box-shadow:0 10px 28px rgba(0,0,0,.35);
+}
+
+/* صورة كبيرة للـ hero إن حبيت تستخدم إحدى صور nurses */
+.hero-figure{
+  width:100%;
+  aspect-ratio: 16 / 10;
+  border-radius:18px;
+  overflow:hidden;
+  border:1px solid var(--line);
+}
+.hero-figure img{
+  width:100%; height:100%; object-fit:cover; display:block;
+}
+
