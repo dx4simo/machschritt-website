@@ -1,6 +1,12 @@
-// app.js — MachSchritt site scripts
+// app.js — MachSchritt site scripts (يدعم WebP + fallback تلقائي)
 
 document.addEventListener('DOMContentLoaded', () => {
+  /* ===== إعدادات الصور ===== */
+  const IMG_DIR = 'images/';       // مجلد الصور
+  const NAME    = 'nurses';        // بادئة أسماء الصور (nurses1, nurses2, ...)
+  const COUNT   = 12;              // عدد الصور الفعلي (عدّله حسب الموجود)
+  const EXTS    = ['webp','jpg','jpeg','png']; // ترتيب المحاولة
+
   /* ===== سنة الفوتر ===== */
   const y = document.getElementById('year');
   if (y) y.textContent = new Date().getFullYear();
@@ -24,16 +30,27 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  /* ===== دالة تعيين صورة بامتدادات بديلة تلقائيًا ===== */
+  function setWithFallback(imgEl, baseNameNoExt) {
+    let k = 0;
+    function attempt() {
+      if (k >= EXTS.length) { imgEl.style.display = 'none'; return; }
+      const src = IMG_DIR + baseNameNoExt + '.' + EXTS[k];
+      imgEl.onerror = () => { k++; attempt(); };
+      imgEl.onload  = () => { imgEl.onerror = null; };
+      imgEl.src = src;
+    }
+    attempt();
+  }
+
   /* =========================================================================
-     HERO SLIDER (nurses1..nurses6 في مجلد images/)
-     ميزات: تشغيل تلقائي، فيد ناعم، نقاط، أسهُم، إيقاف عند الهوفر، سحب تاتش،
-            أسهم الكيبورد، إيقاف عند إخفاء التبويب.
+     HERO SLIDER (يدعم WebP + fallback)
      ========================================================================= */
   const figure = document.querySelector('.hero-figure');
   const heroImg = figure?.querySelector('img');
 
   if (figure && heroImg) {
-    // لو ما فيش wrapper جاهز، أنشئه
+    // غلاف السلايدر + الأسهم + النقاط (إن لم تكن موجودة)
     let root = document.querySelector('.hero-slider');
     if (!root) {
       root = document.createElement('div');
@@ -42,7 +59,6 @@ document.addEventListener('DOMContentLoaded', () => {
       root.appendChild(figure);
     }
 
-    // أسهُم
     let prevBtn = root.querySelector('.hero-nav.prev');
     let nextBtn = root.querySelector('.hero-nav.next');
     if (!prevBtn) {
@@ -62,7 +78,6 @@ document.addEventListener('DOMContentLoaded', () => {
       root.appendChild(nextBtn);
     }
 
-    // نقاط
     let dotsWrap = root.querySelector('.hero-dots');
     if (!dotsWrap) {
       dotsWrap = document.createElement('div');
@@ -72,22 +87,9 @@ document.addEventListener('DOMContentLoaded', () => {
       root.appendChild(dotsWrap);
     }
 
-    // الصور من مجلد images/
-    const basePrefix = 'images/';
-    const heroImages = [
-      'nurses1.jpg','nurses2.jpg','nurses3.jpg',
-      'nurses4.jpg','nurses5.jpg','nurses6.jpg'
-    ].map(s => basePrefix + s);
-
-    // Preload
-    heroImages.forEach(src => { const im = new Image(); im.src = src; });
-
+    // نقاط حسب COUNT
     let i = 0;
-    let timer = null;
-    const DURATION = 3500;
-
-    // أنشئ النقاط
-    const dots = heroImages.map((_, idx) => {
+    const dots = Array.from({length: Math.max(1, COUNT)}, (_, idx) => {
       const d = document.createElement('button');
       d.className = 'hero-dot';
       d.type = 'button';
@@ -97,140 +99,120 @@ document.addEventListener('DOMContentLoaded', () => {
       dotsWrap.appendChild(d);
       return d;
     });
+    function markActive(idx){ dots.forEach((d,j)=>d.classList.toggle('active', j===idx)); }
 
-    function markActive(idx) {
-      dots.forEach((d, j) => d.classList.toggle('active', j === idx));
-    }
-
-    function show(nextIndex, { autoplayReset = false } = {}) {
+    function show(nextIndex, {autoplayReset=false} = {}) {
       if (nextIndex === i) return;
-      i = (nextIndex + heroImages.length) % heroImages.length;
-
+      i = (nextIndex + COUNT) % COUNT; // 0..COUNT-1
       heroImg.classList.add('fade');
-      const tmp = new Image();
-      tmp.src = heroImages[i];
-      tmp.onload = () => {
-        heroImg.src = heroImages[i];
-        requestAnimationFrame(() => heroImg.classList.remove('fade'));
-        markActive(i);
-      };
+
+      // جرّب الامتدادات بالترتيب للصورة المطلوبة
+      const baseName = NAME + (i + 1); // nurses1, nurses2, ...
+      const probe = new Image();
+      let k = 0;
+      function tryNext() {
+        if (k >= EXTS.length) { heroImg.classList.remove('fade'); return; }
+        const src = IMG_DIR + baseName + '.' + EXTS[k];
+        probe.onload  = () => {
+          heroImg.src = src;
+          requestAnimationFrame(()=> heroImg.classList.remove('fade'));
+          markActive(i);
+        };
+        probe.onerror = () => { k++; tryNext(); };
+        probe.src = src;
+      }
+      tryNext();
 
       if (autoplayReset) restart();
     }
+    function nextSlide(){ show(i + 1); }
+    function prevSlide(){ show(i - 1); }
 
-    function nextSlide() { show(i + 1); }
-    function prevSlide() { show(i - 1); }
+    let timer = null;
+    const DURATION = 3500;
+    function start(){ if (!timer) timer = setInterval(nextSlide, DURATION); }
+    function stop(){ if (timer) { clearInterval(timer); timer = null; } }
+    function restart(){ stop(); start(); }
 
-    function start() {
-      if (timer) return;
-      timer = setInterval(nextSlide, DURATION);
-    }
-    function stop() {
-      if (!timer) return;
-      clearInterval(timer);
-      timer = null;
-    }
-    function restart() { stop(); start(); }
-
-    // تفعيل أول نقطة
+    // تفعيل أول نقطة + أول صورة
     markActive(i);
+    setWithFallback(heroImg, NAME + (i + 1));
 
-    // أحداث الأسهم
     nextBtn.addEventListener('click', () => { nextSlide(); restart(); });
     prevBtn.addEventListener('click', () => { prevSlide(); restart(); });
-
-    // إيقاف عند الهوفر واستئناف
     root.addEventListener('mouseenter', stop);
     root.addEventListener('mouseleave', start);
-
-    // لوحة المفاتيح
     document.addEventListener('keydown', (e) => {
       if (e.key === 'ArrowRight') { nextSlide(); restart(); }
       if (e.key === 'ArrowLeft')  { prevSlide(); restart(); }
     });
 
     // سحب بالإصبع
-    let touchX = null;
-    const SWIPE = 40; // px
-    root.addEventListener('touchstart', (e) => {
-      touchX = e.touches[0].clientX; stop();
-    }, { passive: true });
-    root.addEventListener('touchend', (e) => {
+    let touchX = null; const SWIPE = 40;
+    root.addEventListener('touchstart', (e)=>{ touchX = e.touches[0].clientX; stop(); }, {passive:true});
+    root.addEventListener('touchend',   (e)=>{
       if (touchX == null) return;
       const dx = e.changedTouches[0].clientX - touchX;
       if (Math.abs(dx) > SWIPE) { (dx < 0 ? nextSlide : prevSlide)(); }
       touchX = null; start();
-    }, { passive: true });
+    }, {passive:true});
 
-    // إيقاف عند إخفاء التبويب
-    document.addEventListener('visibilitychange', () => {
-      if (document.hidden) stop(); else start();
-    });
-
-    // انطلاقة
+    document.addEventListener('visibilitychange', ()=> document.hidden ? stop() : start());
     start();
   }
 
   /* =========================================================================
-     Auto-assign nurses*.jpg على بطاقات .card تلقائيًا
-     - يوزّع الصور بالتتابع من مجلد images/
-     - لو البطاقة فيها عنصر .card-img مسبقًا ومحطوط عليه data-fixed="true" → بيتساب
-     - ممكن تمنع صورة لبطاقة معينة بـ data-noimg على .card
-     - ممكن تحدد صورة معيّنة لبطاقة بـ data-img="nurses12.jpg"
-     - لو حصل 404 على الصورة، هنخفي العنصر بدل علامة الكسر
+     توزيع تلقائي لصور البطاقات (.card) — يدعم WebP + fallback
+     - لكل بطاقة: لو فيها .img placeholder → هنستبدّله بـ <img.card-img>
+     - لو البطاقة عليها data-noimg → نتجاهلها
+     - لو عليها data-img="اسم_ملف" → نستخدمه كما هو (مع مجلد images/ لو ناقص)
+     - alt يُستخرج تلقائيًا من <h3>/<h2>
      ========================================================================= */
   (function autoCardImages() {
-    const IMG_BASE = 'images/';
-    const PREFIX = 'nurses';
-    const MAX_INDEX = 20; // عدّلها حسب عدد صورك الفعلي (لو أكتر من 12)
     const cards = Array.from(document.querySelectorAll('.card'));
-
     let counter = 1;
-
     cards.forEach(card => {
-      // تجاهل البطاقات اللي مش عايز تحط لها صورة
       if (card.hasAttribute('data-noimg')) return;
 
-      // لو محدد صورة معيّنة
-      const manual = card.getAttribute('data-img');
+      const manual = card.getAttribute('data-img'); // اسم ملف مخصص
       let imgEl = card.querySelector('.card-img');
-
-      // لو مفيش img جاهز، استخدم placeholder .img إن وُجد أو أنشئ عنصر جديد
       if (!imgEl) {
         const ph = card.querySelector('.img');
         imgEl = document.createElement('img');
         imgEl.className = 'card-img';
         imgEl.loading = 'lazy';
-        if (ph) {
-          ph.replaceWith(imgEl);
-        } else {
-          // حط الصورة في أول البطاقة
-          const first = card.firstElementChild;
-          if (first) card.insertBefore(imgEl, first);
-          else card.appendChild(imgEl);
-        }
+        if (ph) ph.replaceWith(imgEl); else card.insertBefore(imgEl, card.firstElementChild);
       }
-
-      // لو محميّة من التعديل
       if (imgEl.dataset.fixed === 'true') return;
 
-      // alt تلقائي من عنوان البطاقة
       const title = card.querySelector('h3,h2')?.textContent?.trim() || 'Bild';
       if (!imgEl.alt) imgEl.alt = title;
 
-      // حدّد المصدر
-      let src;
       if (manual) {
-        src = manual.startsWith('http') ? manual : (manual.startsWith(IMG_BASE) ? manual : IMG_BASE + manual);
+        // لو حدّدت ملف معيّن
+        const hasDir = manual.startsWith('http') || manual.startsWith(IMG_DIR);
+        const base   = hasDir ? manual : (IMG_DIR + manual);
+        // لو فيه امتداد بالفعل هنستخدمه كما هو، لو لأ نجرب EXTS
+        if (/\.(webp|jpe?g|png|gif|avif)$/i.test(base)) {
+          imgEl.onerror = () => { imgEl.style.display = 'none'; };
+          imgEl.src = base;
+        } else {
+          // manual بدون امتداد → جرّب الامتدادات
+          let k = 0;
+          function tryManual() {
+            if (k >= EXTS.length) { imgEl.style.display = 'none'; return; }
+            const src = base + '.' + EXTS[k];
+            imgEl.onerror = () => { k++; tryManual(); };
+            imgEl.src = src;
+          }
+          tryManual();
+        }
       } else {
-        const index = ((counter - 1) % MAX_INDEX) + 1;
-        src = `${IMG_BASE}${PREFIX}${index}.jpg`;
+        // تلقائي: nurses1..nursesCOUNT
+        const index = ((counter - 1) % COUNT) + 1;
         counter++;
+        setWithFallback(imgEl, NAME + index);
       }
-
-      // حط الصورة + اخفيها لو 404
-      imgEl.addEventListener('error', () => { imgEl.style.display = 'none'; });
-      imgEl.src = src;
     });
   })();
 });
