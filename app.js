@@ -7,6 +7,68 @@ document.addEventListener('DOMContentLoaded', () => {
   const COUNT   = 12;              // عدد الصور الفعلي (عدّله حسب الموجود)
   const EXTS    = ['webp','jpg','jpeg','png']; // ترتيب المحاولة
 
+    /* ===== Kontakt: إرسال الإيميل عبر Apps Script ===== */
+  const CONTACT_ENDPOINT = 'https://script.google.com/macros/s/AKfycbwAGlpYcYYaFtBE6ejXvLWeMzDHIN0Q0B8TCNFTThoMn_6kHXNxlfyUdRFf3IzyNLUeXA/exec'; // ← الصق URL
+
+  const form  = document.getElementById('contact-form');
+  const btn   = document.getElementById('c-submit');
+  const stat  = document.getElementById('c-status');
+
+  if (form && btn) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      // honeypot
+      if (document.getElementById('c-company')?.value) return;
+
+      const name    = document.getElementById('c-name')?.value.trim();
+      const phone   = document.getElementById('c-phone')?.value.trim();
+      const email   = document.getElementById('c-email')?.value.trim();
+      const subject = document.getElementById('c-subject')?.value.trim();
+      const message = document.getElementById('c-message')?.value.trim();
+
+      if (!name || !subject || !message) {
+        if (stat) stat.textContent = 'Bitte füllen Sie die Pflichtfelder aus.';
+        return;
+      }
+
+      btn.disabled = true;
+      if (stat) stat.textContent = 'Wird gesendet…';
+
+      try {
+        // نستخدم text/plain لتفادي preflight/CORS
+        const payload = {
+          name, phone, email, subject, message,
+          ua: navigator.userAgent, source: 'website'
+        };
+        const res = await fetch(CONTACT_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(payload)
+        });
+
+        // Apps Script بيرجع JSON بسيط
+        let ok = res.ok;
+        try {
+          const j = await res.json();
+          ok = ok && j.ok;
+        } catch (_) {}
+
+        if (ok) {
+          if (stat) stat.textContent = 'Vielen Dank! Ihre Nachricht wurde gesendet.';
+          form.reset();
+        } else {
+          if (stat) stat.textContent = 'Fehler beim Senden. Bitte versuchen Sie es später erneut.';
+        }
+      } catch (err) {
+        if (stat) stat.textContent = 'Netzwerkfehler. Bitte versuchen Sie es erneut.';
+      } finally {
+        btn.disabled = false;
+      }
+    });
+  }
+
+
   /* ===== سنة الفوتر ===== */
   const y = document.getElementById('year');
   if (y) y.textContent = new Date().getFullYear();
