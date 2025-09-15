@@ -1,9 +1,8 @@
-import Navbar from "../components/Navbar";
+import Layout from "../components/Layout";
 
 export default function Home() {
   return (
-    <div>
-      <Navbar />
+    <Layout>
       <section className="bg-blue-50 min-h-screen flex items-center justify-center text-center">
         <div className="max-w-2xl">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6">
@@ -21,6 +20,6 @@ export default function Home() {
           </a>
         </div>
       </section>
-    </div>
+    </Layout>
   );
 }
