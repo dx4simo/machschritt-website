@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const EXTS    = ['webp','jpg','jpeg','png']; // ترتيب المحاولة
 
     /* ===== Kontakt: إرسال الإيميل عبر Apps Script ===== */
-  const CONTACT_ENDPOINT = 'https://script.google.com/macros/s/AKfycbwAGlpYcYYaFtBE6ejXvLWeMzDHIN0Q0B8TCNFTThoMn_6kHXNxlfyUdRFf3IzyNLUeXA/exec'; // ← الصق URL
+  const CONTACT_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyV0uVD3vFB56EOHpqDInkOmzVH9eQs7scgggsW4pfks6MD7SO4UlVkd05eoOkF0vKqtA/exec'; // ← الصق URL
 
   const form  = document.getElementById('contact-form');
   const btn   = document.getElementById('c-submit');
@@ -54,17 +54,18 @@ document.addEventListener('DOMContentLoaded', () => {
           ok = ok && j.ok;
         } catch (_) {}
 
-        if (ok) {
-          if (stat) stat.textContent = 'Vielen Dank! Ihre Nachricht wurde gesendet.';
-          form.reset();
-        } else {
-          if (stat) stat.textContent = 'Fehler beim Senden. Bitte versuchen Sie es später erneut.';
-        }
-      } catch (err) {
-        if (stat) stat.textContent = 'Netzwerkfehler. Bitte versuchen Sie es erneut.';
-      } finally {
-        btn.disabled = false;
-      }
+        // ...
+if (ok) {
+  if (stat) { stat.textContent = 'Vielen Dank! Ihre Nachricht wurde gesendet.'; stat.classList.remove('err'); stat.classList.add('ok'); }
+  form.reset();
+} else {
+  if (stat) { stat.textContent = 'Fehler beim Senden. Bitte versuchen Sie es später erneut.'; stat.classList.remove('ok'); stat.classList.add('err'); }
+}
+// ...
+} catch (err) {
+  if (stat) { stat.textContent = 'Netzwerkfehler. Bitte versuchen Sie es erneut.'; stat.classList.remove('ok'); stat.classList.add('err'); }
+}
+
     });
   }
 
