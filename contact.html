@@ -36,27 +36,47 @@
         <h3>Ihre Nachricht</h3>
 
         <form id="contact-form" class="form" novalidate>
-          <div class="form-row two">
-            <input type="text" id="c-name" name="name" placeholder="Vollständiger Name" required>
-            <input type="tel"  id="c-phone" name="phone" placeholder="Mobilnummer">
-          </div>
-          <div class="form-row">
-            <input type="email" id="c-email" name="email" placeholder="E-Mail (optional)">
-          </div>
-          <div class="form-row">
-            <input type="text" id="c-subject" name="subject" placeholder="Betreff" required>
-          </div>
-          <div class="form-row">
-            <textarea id="c-message" name="message" rows="6" placeholder="Ihre Nachricht" required></textarea>
-          </div>
+    <div class="form-row two">
+      <div class="field">
+        <label for="c-name">Vollständiger Name</label>
+        <input type="text" id="c-name" name="name" placeholder="Vollständiger Name" required>
+      </div>
+      <div class="field">
+        <label for="c-phone">Mobilnummer</label>
+        <input type="tel" id="c-phone" name="phone" placeholder="Mobilnummer">
+      </div>
+    </div>
 
-          <!-- honeypot لمكافحة السبام -->
-          <input type="text" id="c-company" name="company" style="display:none" tabindex="-1" autocomplete="off">
+    <div class="form-row">
+      <div class="field">
+        <label for="c-email">E-Mail</label>
+        <input type="email" id="c-email" name="email" placeholder="E-Mail (optional)">
+      </div>
+    </div>
 
-          <button type="submit" id="c-submit" class="btn btn-primary">Senden</button>
-          <span id="c-status" class="status" role="status" aria-live="polite"></span>
-        </form>
-      </article>
+    <div class="form-row">
+      <div class="field">
+        <label for="c-subject">Betreff</label>
+        <input type="text" id="c-subject" name="subject" placeholder="Betreff" required>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="field">
+        <label for="c-message">Ihre Nachricht</label>
+        <textarea id="c-message" name="message" rows="6" placeholder="Ihre Nachricht" required></textarea>
+      </div>
+    </div>
+
+    <!-- honeypot -->
+    <input type="text" id="c-company" name="company" style="display:none" tabindex="-1" autocomplete="off">
+
+    <div class="form-actions">
+      <button type="submit" id="c-submit" class="btn btn-primary">Senden</button>
+      <span id="c-status" class="status" role="status" aria-live="polite"></span>
+    </div>
+  </form>
+</article>
     </div>
   </div>
 </section>
