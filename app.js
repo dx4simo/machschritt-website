@@ -182,7 +182,7 @@ document.addEventListener('DOMContentLoaded', () => {
   (function autoCardImages() {
     const IMG_BASE = 'images/';
     const PREFIX = 'nurses';
-    const MAX_INDEX = 12; // عدّلها حسب عدد صورك الفعلي (لو أكتر من 12)
+    const MAX_INDEX = 20; // عدّلها حسب عدد صورك الفعلي (لو أكتر من 12)
     const cards = Array.from(document.querySelectorAll('.card'));
 
     let counter = 1;
