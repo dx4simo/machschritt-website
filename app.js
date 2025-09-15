@@ -1,12 +1,11 @@
-<script>
 // app.js — MachSchritt site scripts
 
 document.addEventListener('DOMContentLoaded', () => {
-  /* ===== Footer year ===== */
+  /* ===== سنة الفوتر ===== */
   const y = document.getElementById('year');
   if (y) y.textContent = new Date().getFullYear();
 
-  /* ===== Mobile menu ===== */
+  /* ===== موبايل منيو ===== */
   const btn = document.querySelector('.menu-btn');
   const nav = document.querySelector('header nav');
   if (btn && nav) {
@@ -16,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  /* ===== Active link highlight ===== */
+  /* ===== تمييز الرابط الحالي ===== */
   const path = location.pathname.split('/').pop() || 'index.html';
   document.querySelectorAll('header nav a').forEach((a) => {
     const href = a.getAttribute('href') || '';
@@ -26,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* =========================================================================
-     HERO SLIDER (nurses1..nurses6)
+     HERO SLIDER (nurses1..nurses6 في مجلد images/)
      ميزات: تشغيل تلقائي، فيد ناعم، نقاط، أسهُم، إيقاف عند الهوفر، سحب تاتش،
             أسهم الكيبورد، إيقاف عند إخفاء التبويب.
      ========================================================================= */
@@ -34,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const heroImg = figure?.querySelector('img');
 
   if (figure && heroImg) {
-    // لو ما فيش wrapper جاهز، أنشئه وبرمجياً أضف الأسهم والنقاط:
+    // لو ما فيش wrapper جاهز، أنشئه
     let root = document.querySelector('.hero-slider');
     if (!root) {
       root = document.createElement('div');
@@ -73,12 +72,11 @@ document.addEventListener('DOMContentLoaded', () => {
       root.appendChild(dotsWrap);
     }
 
-    // لو الصور داخل مجلد، عدّل البادئة هنا:
-    const basePrefix = ''; // مثال: 'images/'
-
+    // الصور من مجلد images/
+    const basePrefix = 'images/';
     const heroImages = [
-      'nurses1.jpg', 'nurses2.jpg', 'nurses3.jpg',
-      'nurses4.jpg', 'nurses5.jpg', 'nurses6.jpg'
+      'nurses1.jpg','nurses2.jpg','nurses3.jpg',
+      'nurses4.jpg','nurses5.jpg','nurses6.jpg'
     ].map(s => basePrefix + s);
 
     // Preload
@@ -172,6 +170,67 @@ document.addEventListener('DOMContentLoaded', () => {
     // انطلاقة
     start();
   }
-});
 
-</script>
+  /* =========================================================================
+     Auto-assign nurses*.jpg على بطاقات .card تلقائيًا
+     - يوزّع الصور بالتتابع من مجلد images/
+     - لو البطاقة فيها عنصر .card-img مسبقًا ومحطوط عليه data-fixed="true" → بيتساب
+     - ممكن تمنع صورة لبطاقة معينة بـ data-noimg على .card
+     - ممكن تحدد صورة معيّنة لبطاقة بـ data-img="nurses12.jpg"
+     - لو حصل 404 على الصورة، هنخفي العنصر بدل علامة الكسر
+     ========================================================================= */
+  (function autoCardImages() {
+    const IMG_BASE = 'images/';
+    const PREFIX = 'nurses';
+    const MAX_INDEX = 12; // عدّلها حسب عدد صورك الفعلي (لو أكتر من 12)
+    const cards = Array.from(document.querySelectorAll('.card'));
+
+    let counter = 1;
+
+    cards.forEach(card => {
+      // تجاهل البطاقات اللي مش عايز تحط لها صورة
+      if (card.hasAttribute('data-noimg')) return;
+
+      // لو محدد صورة معيّنة
+      const manual = card.getAttribute('data-img');
+      let imgEl = card.querySelector('.card-img');
+
+      // لو مفيش img جاهز، استخدم placeholder .img إن وُجد أو أنشئ عنصر جديد
+      if (!imgEl) {
+        const ph = card.querySelector('.img');
+        imgEl = document.createElement('img');
+        imgEl.className = 'card-img';
+        imgEl.loading = 'lazy';
+        if (ph) {
+          ph.replaceWith(imgEl);
+        } else {
+          // حط الصورة في أول البطاقة
+          const first = card.firstElementChild;
+          if (first) card.insertBefore(imgEl, first);
+          else card.appendChild(imgEl);
+        }
+      }
+
+      // لو محميّة من التعديل
+      if (imgEl.dataset.fixed === 'true') return;
+
+      // alt تلقائي من عنوان البطاقة
+      const title = card.querySelector('h3,h2')?.textContent?.trim() || 'Bild';
+      if (!imgEl.alt) imgEl.alt = title;
+
+      // حدّد المصدر
+      let src;
+      if (manual) {
+        src = manual.startsWith('http') ? manual : (manual.startsWith(IMG_BASE) ? manual : IMG_BASE + manual);
+      } else {
+        const index = ((counter - 1) % MAX_INDEX) + 1;
+        src = `${IMG_BASE}${PREFIX}${index}.jpg`;
+        counter++;
+      }
+
+      // حط الصورة + اخفيها لو 404
+      imgEl.addEventListener('error', () => { imgEl.style.display = 'none'; });
+      imgEl.src = src;
+    });
+  })();
+});
