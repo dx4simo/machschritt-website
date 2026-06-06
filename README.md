@@ -6,16 +6,6 @@ The project presents information for employers, candidates and visitors in a cle
 
 ---
 
-## Note
-
-Some of my older projects were transferred from my previous GitHub account to this new profile because the old account could not be recovered.
-
-My old account: https://github.com/dx4simo/machschritt-website
-
-
-
----
-
 ## Live Demo
 
 (https://machschritt.com/)
