@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="de" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MachSchritt Bescheid | Interne Fallverwaltung</title>
+  <meta name="description" content="MachSchritt Bescheid ist ein internes System zur Organisation, Nachverfolgung und Bearbeitung von Bescheid-Verfahren einschließlich fallbezogener Gmail-Kommunikation.">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+  <link rel="icon" href="images/logo-mark.svg">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="index.html" class="brand" aria-label="Zur Startseite">
+      <img class="brand-mark" src="images/logo-mark.svg" alt="">
+      <img class="brand-logo" src="images/logo-wordmark.svg" alt="MachSchritt">
+    </a>
+
+    <nav>
+      <a href="index.html">Startseite</a>
+      <a href="about.html">Über uns</a>
+      <a href="clients.html">Für Kunden</a>
+      <a href="talents.html">Für Fachkräfte</a>
+      <a href="contact.html">Kontakt</a>
+    </nav>
+
+    <button class="menu-btn">Menü ☰</button>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container hero-inner">
+    <div>
+      <p class="muted" style="margin-bottom:8px;">Interne digitale Fallverwaltung</p>
+      <h1>MachSchritt Bescheid</h1>
+      <p class="lead">
+        Ein internes Verwaltungssystem zur strukturierten Bearbeitung und Nachverfolgung
+        von Bescheid-Verfahren.
+      </p>
+      <a class="btn btn-primary" href="https://system.machschritt.com">
+        Zum Bescheid-System
+      </a>
+      <a class="btn btn-ghost" href="privacy.html" style="margin-inline-start:8px">
+        Datenschutzerklärung
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h2 class="section-title">Wofür wird MachSchritt Bescheid verwendet?</h2>
+
+    <div class="grid cols-3">
+      <article class="card">
+        <h3>Fallverwaltung</h3>
+        <p class="muted">
+          Bescheid-Fälle können strukturiert erfasst, Mitarbeitern zugeordnet und über
+          ihren Bearbeitungsstatus hinweg nachverfolgt werden.
+        </p>
+      </article>
+
+      <article class="card">
+        <h3>Dokumente & Wiedervorlagen</h3>
+        <p class="muted">
+          Das System unterstützt die interne Verwaltung von Dokumentenstatus,
+          Checklisten, nächsten Schritten, Wiedervorlagen und Follow-ups.
+        </p>
+      </article>
+
+      <article class="card">
+        <h3>Fallbezogene Gmail-Kommunikation</h3>
+        <p class="muted">
+          Autorisierte Mitarbeiter können ein für den jeweiligen Vorgang vorgesehenes
+          Gmail-Konto über Google OAuth verbinden, um relevante Nachrichten und Anhänge
+          innerhalb des Bearbeitungsprozesses einzusehen.
+        </p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section alt">
+  <div class="container">
+    <h2 class="section-title">Google OAuth & Gmail</h2>
+
+    <div class="card">
+      <p>
+        Die Verbindung mit Gmail erfolgt über Google OAuth 2.0. Das verbundene Gmail-Konto
+        wird ausschließlich für die interne Bearbeitung des jeweiligen Bescheid-Vorgangs
+        verwendet.
+      </p>
+
+      <p>
+        MachSchritt Bescheid verwendet den Gmail-Zugriff insbesondere, um relevante
+        E-Mail-Metadaten, Nachrichteninhalte und zugehörige Anhänge für berechtigte
+        Mitarbeiter innerhalb des Systems bereitzustellen.
+      </p>
+
+      <p>
+        Das System verwendet Gmail-Daten nicht für Werbung, Marketing oder Profilbildung
+        und sendet oder verändert keine Gmail-Nachrichten im Rahmen der normalen
+        Bescheid-Nachverfolgung.
+      </p>
+
+      <p>
+        Weitere Informationen zur Verarbeitung von Google-Nutzerdaten finden Sie in unserer
+        <a href="privacy.html"><strong>Datenschutzerklärung</strong></a>.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h2 class="section-title">Zugriff und Nutzung</h2>
+
+    <div class="grid cols-3">
+      <div class="card">
+        <h3>Nur autorisierte Mitarbeiter</h3>
+        <p class="muted">
+          Das Bescheid-System ist kein öffentliches Kundenportal. Der Zugriff ist auf
+          berechtigte interne Nutzer beschränkt.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Zweckgebundene Verarbeitung</h3>
+        <p class="muted">
+          Die innerhalb des Systems verarbeiteten Daten werden ausschließlich zur
+          Bearbeitung und Nachverfolgung der jeweiligen Vorgänge verwendet.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Datenschutz</h3>
+        <p class="muted">
+          Informationen zur Datenverarbeitung, zu Google OAuth und zur Gmail API finden
+          Sie in unserer Datenschutzerklärung.
+        </p>
+        <a class="btn btn-primary" href="privacy.html">Datenschutz ansehen</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <p>© <span id="year"></span> MachSchritt</p>
+    <div>
+      <a class="nav" href="privacy.html">Datenschutz</a>
+      <a class="nav" href="imprint.html" style="margin-inline-start:10px">Impressum</a>
+    </div>
+  </div>
+</footer>
+
+<script src="logic.js"></script>
+</body>
+</html>
